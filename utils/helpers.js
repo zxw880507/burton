@@ -7,7 +7,7 @@ export const dataReformat = (arr) => {
   }));
 };
 
-export const getStockByAvail = (arr) => {
+export const isAvailable = (arr) => {
   return arr.filter((el) => el.available);
 };
 
@@ -32,4 +32,16 @@ export const productMapping = (arr) => {
     }
     return accu;
   }, {});
+};
+
+export const sortDemand = (productArray, form) => {
+  return Object.keys(form).reduce((accu, curr) => {
+    const list = form[curr];
+    let newArr = [];
+    list.forEach((el) => {
+      const filter = accu.filter((pt) => pt[curr] === el);
+      newArr = newArr.concat(filter);
+    });
+    return newArr;
+  }, productArray);
 };
