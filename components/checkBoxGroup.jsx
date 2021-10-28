@@ -17,7 +17,9 @@ export default function CheckBoxGroup(props) {
   return (
     !loading && (
       <>
-        <Typography>{label}</Typography>
+        <Typography style={{ textTransform: "uppercase", fontWeight: "600" }}>
+          {label}
+        </Typography>
         <Grid>
           {values.map((value, index) => {
             return (
