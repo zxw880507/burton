@@ -1,9 +1,11 @@
 export const dataReformat = (arr) => {
   return arr.map((el) => ({
     id: el.ID,
+    name: el.name,
     size: el.variationSize.displayName,
     color: el.color,
     available: el.status.available,
+    addToCartLink: el.addToCartLink,
   }));
 };
 
