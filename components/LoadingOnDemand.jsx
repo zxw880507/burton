@@ -28,7 +28,7 @@ export default function LoadingOnDemand(props) {
       });
     }
     return () => clearInterval(intervalFetching);
-  }, [status, pid, interval]);
+  }, [status, pid, interval, phoneNumber, router, dispatch]);
   return (
     <Container
       maxWidth="sm"

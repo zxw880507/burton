@@ -10,7 +10,7 @@ import { toggleMode, modeState } from "../store/features/modeSlice";
 import { getPhoneNumber } from "../store/features/phoneSlice";
 import { useRouter } from "next/router";
 
-export default function itemPage() {
+export default function ItemPage() {
   const router = useRouter();
   const [interval, setInterval] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -28,7 +28,7 @@ export default function itemPage() {
           .then(() => dispatch(setFormState()))
       );
     }
-  }, [pid]);
+  }, [pid, dispatch]);
 
   if (mode) {
     return <LoadingOnDemand pid={pid} interval={interval} />;
