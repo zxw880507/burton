@@ -1,3 +1,5 @@
+import { SegmentedMessage } from "sms-segments-calculator";
+
 export const dataReformat = (arr) => {
   return arr.map((el) => ({
     id: el.ID,
@@ -46,4 +48,26 @@ export const sortDemand = (productArray, form) => {
     });
     return newArr;
   }, productArray);
+};
+
+export const getMsgArray = (demand, maxChar) => {
+  let newArr = [];
+  let init = "您查询的商品已经补货，刚快去抢货:\n\n";
+  let list = demand.reduce((accu, el, index) => {
+    const { name, size, color, addToCartLink } = el;
+    if (index && accu.length) {
+      accu += "\n\n";
+    }
+    let part = `${name}\nsize: ${size}\ncolor: ${color}\naddToCartLink: https://www.burton.com${addToCartLink}.html`;
+
+    let newAccu = accu + part;
+    let GSMLength = new SegmentedMessage(newAccu).numberOfCharacters;
+    if (GSMLength >= maxChar) {
+      newArr.push(accu);
+      return part;
+    }
+    return newAccu;
+  }, init);
+  newArr.push(list);
+  return newArr;
 };
