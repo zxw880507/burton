@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { getMsgArray } from "../../utils/helpers";
 import axios from "axios";
 
 const initialState = {
@@ -13,8 +14,12 @@ export const sendSMSMessage = createAsyncThunk(
   async (_, { getState, rejectWithValue }) => {
     const { phoneNumber } = getState().phoneState;
     const { demand } = getState().demandState;
+    const messages = getMsgArray(demand, 1500);
     try {
-      const res = await axios.post(`/api/sms/${phoneNumber}`, { demand });
+      const promiseArr = messages.map((msg) =>
+        axios.post(`/api/sms/${phoneNumber}`, { msg })
+      );
+      const res = await Promise.all(promiseArr);
       return res.data;
     } catch (error) {
       if (!error.response) {
