@@ -23,6 +23,7 @@ const handler = nc()
         res.status(200).json("message sent");
       })
       .catch((err) => {
+        console.log(err);
         res.status(500).send({ errorMessage: `message sent failed` });
       });
   });
