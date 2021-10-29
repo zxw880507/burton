@@ -11,24 +11,13 @@ const handler = nc()
   .use(cors())
   .post((req, res) => {
     const { phoneNumber } = req.query;
-    const { demand } = req.body;
-
-    let list = demand.reduce((accu, el, index) => {
-      const { name, size, color, addToCartLink } = el;
-      if (index) {
-        accu += "\n\n";
-      }
-      let part = `${name}\nsize: ${size}\ncolor: ${color}\naddToCartLink: https://www.burton.com${addToCartLink}.html`;
-      accu += part;
-
-      return accu;
-    }, "");
+    const { msg } = req.body;
 
     client.messages
       .create({
         to: `+1${phoneNumber}`,
         from: twilioNumber,
-        body: `您查询的商品已经补货，刚快去抢货:\n\n${list}`,
+        body: msg,
       })
       .then((message) => {
         res.status(200).json("message sent");
