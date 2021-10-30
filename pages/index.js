@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 function HomePage() {
   const router = useRouter();
   const [input, setInput] = useState("");
-  
 
   return (
     <Container
@@ -27,6 +26,7 @@ function HomePage() {
         <TextField
           label="product id"
           variant="standard"
+          defaultValue=""
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />

@@ -5,20 +5,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProductById, productState } from "../store/features/productSlice";
 import { checkboxState, getCheckbox } from "../store/features/checkboxSlice";
 import CheckBoxGroup from "../components/CheckBoxGroup";
-import { setFormState } from "../store/features/formSlice";
+import { setFormState, formState } from "../store/features/formSlice";
 import { toggleMode, modeState } from "../store/features/modeSlice";
 import { getPhoneNumber } from "../store/features/phoneSlice";
+import { getEmail } from "../store/features/emailSlice";
 import { useRouter } from "next/router";
 
 export default function ItemPage() {
   const router = useRouter();
-  const [interval, setInterval] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [interval, setInterval] = useState(undefined);
+  const [phoneNumber, setPhoneNumber] = useState(undefined);
+  const [email, setEmail] = useState(undefined);
   const { pid } = router.query;
   const dispatch = useDispatch();
   const { checkbox, status, error } = useSelector(checkboxState);
   const { product } = useSelector(productState);
+  const { form } = useSelector(formState);
   const mode = useSelector(modeState);
+
+  const unselected = (form) => {
+    const keyArr = Object.keys(form);
+    return !(keyArr.length && keyArr.every((key) => form[key].length));
+  };
 
   useEffect(() => {
     if (pid) {
@@ -61,6 +69,7 @@ export default function ItemPage() {
               label="Fetch interval (秒)"
               type="number"
               variant="standard"
+              defaultValue=""
               value={interval}
               onChange={(e) => setInterval(e.target.value)}
             />
@@ -69,9 +78,21 @@ export default function ItemPage() {
               label="Phone number (optional)"
               type="tel"
               variant="standard"
+              defaultValue=""
               value={phoneNumber}
               onChange={(e) => {
                 setPhoneNumber(e.target.value);
+              }}
+            />
+            <TextField
+              id="email"
+              label="Email (optional)"
+              type="email"
+              variant="standard"
+              defaultValue=""
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
               }}
             />
           </div>
@@ -80,9 +101,11 @@ export default function ItemPage() {
               variant="contained"
               color="primary"
               sx={{ marginRight: "2rem" }}
+              disabled={unselected(form)}
               onClick={() => {
                 dispatch(toggleMode());
                 dispatch(getPhoneNumber(phoneNumber));
+                dispatch(getEmail(email));
               }}
             >
               submit

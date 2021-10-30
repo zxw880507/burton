@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchOnDemand, demandState } from "../store/features/demandSlice";
 import { toggleMode } from "../store/features/modeSlice";
 import { sendSMSMessage, phoneState } from "../store/features/phoneSlice";
+import { sendEmail, emailState } from "../store/features/emailSlice";
 import { useRouter } from "next/router";
 
 export default function LoadingOnDemand(props) {
@@ -12,6 +13,7 @@ export default function LoadingOnDemand(props) {
   const dispatch = useDispatch();
   const { status } = useSelector(demandState);
   const { phoneNumber } = useSelector(phoneState);
+  const { email } = useSelector(emailState);
 
   useEffect(() => {
     const timeInterval = interval ? interval : 5;
@@ -25,10 +27,13 @@ export default function LoadingOnDemand(props) {
         if (phoneNumber) {
           dispatch(sendSMSMessage());
         }
+        if (email) {
+          dispatch(sendEmail());
+        }
       });
     }
     return () => clearInterval(intervalFetching);
-  }, [status, pid, interval, phoneNumber, router, dispatch]);
+  }, [status, pid, interval, phoneNumber, email, router, dispatch]);
   return (
     <Container
       maxWidth="sm"
