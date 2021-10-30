@@ -13,9 +13,9 @@ import { useRouter } from "next/router";
 
 export default function ItemPage() {
   const router = useRouter();
-  const [interval, setInterval] = useState(undefined);
-  const [phoneNumber, setPhoneNumber] = useState(undefined);
-  const [email, setEmail] = useState(undefined);
+  const [interval, setInterval] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
   const { pid } = router.query;
   const dispatch = useDispatch();
   const { checkbox, status, error } = useSelector(checkboxState);
@@ -69,7 +69,6 @@ export default function ItemPage() {
               label="Fetch interval (秒)"
               type="number"
               variant="standard"
-              defaultValue=""
               value={interval}
               onChange={(e) => setInterval(e.target.value)}
             />
@@ -78,7 +77,6 @@ export default function ItemPage() {
               label="Phone number (optional)"
               type="tel"
               variant="standard"
-              defaultValue=""
               value={phoneNumber}
               onChange={(e) => {
                 setPhoneNumber(e.target.value);
@@ -89,7 +87,6 @@ export default function ItemPage() {
               label="Email (optional)"
               type="email"
               variant="standard"
-              defaultValue=""
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);

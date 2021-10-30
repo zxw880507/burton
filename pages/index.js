@@ -26,7 +26,6 @@ function HomePage() {
         <TextField
           label="product id"
           variant="standard"
-          defaultValue=""
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
