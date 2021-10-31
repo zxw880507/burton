@@ -4,8 +4,10 @@ export const dataReformat = (arr) => {
   return arr.map((el) => ({
     id: el.ID,
     name: el.name,
+    sizeId: el.variationSize.ID,
     size: el.variationSize.displayName,
-    color: el.color,
+    colorId: el.variationColor.ID,
+    color: el.variationColor.displayName,
     available: el.status.available,
     addToCartLink: el.addToCartLink,
   }));
@@ -70,4 +72,9 @@ export const getMsgArray = (demand, maxChar) => {
   }, init);
   newArr.push(list);
   return newArr;
+};
+
+export const restockQueryString = (item, pid) => {
+  const { colorId, sizeId } = item;
+  return `https://www.burton.com/on/demandware.store/Sites-Burton_NA-Site/en_CA/Product-Variation?dwvar_${pid}_variationColor=${colorId}&dwvar_${pid}_variationSize=${sizeId}&pid=${pid}&quantity=1`;
 };

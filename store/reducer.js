@@ -6,6 +6,7 @@ import modeReducer from "./features/modeSlice";
 import demandReducer from "./features/demandSlice";
 import phoneReducer from "./features/phoneSlice";
 import emailReducer from "./features/emailSlice";
+import restockReducer from "./features/restockSlice";
 
 const appReducer = combineReducers({
   productState: productReducer,
@@ -15,6 +16,7 @@ const appReducer = combineReducers({
   demandState: demandReducer,
   phoneState: phoneReducer,
   emailState: emailReducer,
+  restockState: restockReducer,
 });
 
 const rootReducer = (state, action) => {

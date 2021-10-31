@@ -26,7 +26,9 @@ export default function Result() {
             style={{ border: "1px solid #000", margin: "1rem 0" }}
           >
             {Object.keys(product).map((key, index) => {
-              if (key !== "available") {
+              if (
+                ["id", "name", "color", "size", "addToCartLink"].includes(key)
+              ) {
                 return (
                   <li
                     key={index}
