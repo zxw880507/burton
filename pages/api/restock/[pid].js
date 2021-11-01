@@ -8,14 +8,16 @@ const handler = nc()
   .use(cors())
   .get(async (req, res) => {
     const { pid, item } = req.query;
+    const itemParse = JSON.parse(item);
+    const fetchURL = restockQueryString(itemParse, pid);
     try {
-      const response = await axios.get(restockQueryString(item, pid));
+      const response = await axios.get(fetchURL);
       if (Object.keys(response.data.product).length) {
         const { availability } = response.data.product;
         const { inStockDate, available, availabilityStatus, buttonCopy } =
           availability;
 
-        const { id, name, color, size } = JSON.parse(item);
+        const { id, name, color, size } = itemParse;
         const data = {
           id,
           name,
