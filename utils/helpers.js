@@ -8,7 +8,7 @@ export const dataReformat = (arr) => {
     size: el.variationSize.displayName,
     colorId: el.variationColor.ID,
     color: el.variationColor.displayName,
-    available: el.status.available,
+    available: el.status.available && !el.status.backinstock,
     addToCartLink: el.addToCartLink,
   }));
 };
